@@ -42,11 +42,12 @@ class App extends React.Component {
         <div className="menu">
           <Header tagline="Fresh Seafood Market" />
           <ul className="list-of-fishes">
-            {Object.keys(this.state.fishes).map(key => <Fish key={key} />)}
+            {Object.keys(this.state.fishes)
+              .map(key => <Fish key={key} details={this.state.fishes[key]} />)}
           </ul>
         </div>
         <Order />
-        <Inventory addFish={this.addFish} loadSamples={this.loadSamples} /> {/*this is how we pass props to child components */}
+        <Inventory addFish={this.addFish} loadSamples={this.loadSamples}ß /> {/*this is how we pass props to child components */}
       </div>
     )
   }
