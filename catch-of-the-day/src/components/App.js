@@ -2,8 +2,9 @@ import React from 'react';
 import Header from './Header';
 import StorePicker from './StorePicker';
 import Order from './Order';
-import Inventory from './Inventory';
 import sampleFishes from '../sample-fishes';
+import Inventory from './Inventory';
+import Fish from './Fish';
 
 //Parent component of app. This is where state will be set.
 
@@ -40,9 +41,12 @@ class App extends React.Component {
       <div className="catch-of-the-day">
         <div className="menu">
           <Header tagline="Fresh Seafood Market" />
+          <ul className="list-of-fishes">
+            {Object.keys(this.state.fishes).map(key => <Fish key={key} />)}
+          </ul>
         </div>
         <Order />
-        <Inventory addSamples={this.loadSamples} addFish={this.addFish}/> {/*this is how we pass props to child components */}
+        <Inventory addFish={this.addFish} loadSamples={this.loadSamples} /> {/*this is how we pass props to child components */}
       </div>
     )
   }
