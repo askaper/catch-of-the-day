@@ -3,6 +3,7 @@ import Header from './Header';
 import StorePicker from './StorePicker';
 import Order from './Order';
 import Inventory from './Inventory';
+import sampleFishes from '../sample-fishes';
 
 //Parent component of app. This is where state will be set.
 
@@ -10,6 +11,7 @@ class App extends React.Component {
   constructor() {
     super();
     this.addFish = this.addFish.bind(this);
+    this.loadSamples = this.loadSamples.bind(this);
     // This is the initial state.
     this.state = {
       fishes: {},
@@ -27,6 +29,12 @@ class App extends React.Component {
     this.setState({ fishes });
   }
 
+  loadSamples() {
+    this.setState({
+      fishes: sampleFishes
+    });
+  }
+
   render() {
     return (
       <div className="catch-of-the-day">
@@ -34,7 +42,7 @@ class App extends React.Component {
           <Header tagline="Fresh Seafood Market" />
         </div>
         <Order />
-        <Inventory addFish={this.addFish}/> {/*this is how we pass props to child components */}
+        <Inventory addSamples={this.loadSamples} addFish={this.addFish}/> {/*this is how we pass props to child components */}
       </div>
     )
   }
