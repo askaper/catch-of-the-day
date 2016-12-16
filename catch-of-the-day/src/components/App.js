@@ -5,6 +5,7 @@ import Order from './Order';
 import sampleFishes from '../sample-fishes';
 import Inventory from './Inventory';
 import Fish from './Fish';
+import base from '../base';
 
 //Parent component of app. This is where state will be set.
 
@@ -20,6 +21,17 @@ class App extends React.Component {
       fishes: {},
       order: {}
     };
+  }
+
+  componentWillMount() {
+    this.ref = base.syncState(`${this.props.params.storeId}/fishes`, {
+      context: this,
+      state: 'fishes'
+    });
+  }
+
+  componentWillUnmount() {
+    base.removeBinding(this.ref);
   }
 
   addFish(fish) {
