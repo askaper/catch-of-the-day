@@ -24,14 +24,30 @@ class App extends React.Component {
   }
 
   componentWillMount() {
+    //this rune before app is rendered
     this.ref = base.syncState(`${this.props.params.storeId}/fishes`, {
       context: this,
       state: 'fishes'
     });
+
+    //check for any order in localStorage
+    const localStorageRef = localStorage.getItem(`order-${this.props.params.storeId}`);
+
+    if(localStorageRef) {
+      //update app Component in order's state.
+      this.setState({
+        order: JSON.parse(localStorageRef)
+      });
+
+    }
   }
 
   componentWillUnmount() {
     base.removeBinding(this.ref);
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    localStorage.setItem(`order-${this.props.params.storeId}`, JSON.stringify(nextState.order));
   }
 
   addFish(fish) {
@@ -69,7 +85,7 @@ class App extends React.Component {
               .map(key => <Fish key={key} index={key} details={this.state.fishes[key]} addToOrder={this.addToOrder}/>)}
           </ul>
         </div>
-        <Order fishes={this.state.fishes} order={this.state.order} />
+        <Order fishes={this.state.fishes} order={this.state.order} params={this.props.params} />
         <Inventory addFish={this.addFish} loadSamples={this.loadSamples} /> {/*this is how we pass props to child components */}
       </div>
     )
