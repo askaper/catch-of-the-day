@@ -86,7 +86,7 @@ class App extends React.Component {
           </ul>
         </div>
         <Order fishes={this.state.fishes} order={this.state.order} params={this.props.params} />
-        <Inventory addFish={this.addFish} loadSamples={this.loadSamples} /> {/*this is how we pass props to child components */}
+        <Inventory fishes={this.state.fishes} addFish={this.addFish} loadSamples={this.loadSamples} /> {/*this is how we pass props to child components */}
       </div>
     )
   }
