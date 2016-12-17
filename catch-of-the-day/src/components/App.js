@@ -18,6 +18,7 @@ class App extends React.Component {
     this.addToOrder = this.addToOrder.bind(this);
     this.updateFish = this.updateFish.bind(this);
     this.removeFish = this.removeFish.bind(this);
+    this.removeFromOrder = this.removeFromOrder.bind(this);
     // This is the initial state.
     this.state = {
       fishes: {},
@@ -86,7 +87,13 @@ class App extends React.Component {
 
     //push to state
     order[key] = order[key] + 1 || 1;
-    this.setState({ order })
+    this.setState({ order });
+  }
+
+  removeFromOrder(key) {
+    const order = {...this.state.order};
+    delete order[key];
+    this.setState({ order });
   }
 
   render() {
@@ -99,7 +106,7 @@ class App extends React.Component {
               .map(key => <Fish key={key} index={key} details={this.state.fishes[key]} addToOrder={this.addToOrder}/>)}
           </ul>
         </div>
-        <Order fishes={this.state.fishes} order={this.state.order} params={this.props.params} />
+        <Order removeFromOrder={this.removeFromOrder} fishes={this.state.fishes} order={this.state.order} params={this.props.params} />
         <Inventory updateFish={this.updateFish} removeFish={this.removeFish} fishes={this.state.fishes} addFish={this.addFish} loadSamples={this.loadSamples} /> {/*this is how we pass props to child components */}
       </div>
     )
