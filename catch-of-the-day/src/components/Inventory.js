@@ -9,7 +9,7 @@ class Inventory extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange() {
+  handleChange(e, key) {
     const fish = this.props.fishes[key];
   }
 
