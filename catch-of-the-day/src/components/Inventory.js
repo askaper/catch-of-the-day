@@ -40,7 +40,24 @@ class Inventory extends React.Component {
     }
 
     // Grabs the store info
-    const storeRef = base.database().ref()
+    const storeRef = base.database().ref(this.props.storeId);
+
+    // Query firebase for store database
+    storeRef.once('value', (snapshot) => {
+      const data = snapshot.val() || {};
+
+      // Claim it as our own if there is no owner already.
+      if(!data.owner) {
+        storeRef.set({
+          owner: authData.user.uid
+        });
+      }
+
+      this.setState({
+        uid: authData.user.uid,
+        owner: data.owner || authData.user.uid
+      });
+    });
   }
 
   renderLogin() {
