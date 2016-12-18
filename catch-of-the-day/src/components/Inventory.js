@@ -1,5 +1,6 @@
 import React from 'react';
 import AddFishForm from './AddFishForm';
+import base from '../base';
 
 class Inventory extends React.Component {
 
@@ -8,6 +9,8 @@ class Inventory extends React.Component {
     this.renderInventory = this.renderInventory.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.renderLogin = this.renderLogin.bind(this);
+    this.authenticate = this.authenticate.bind(this);
+    this.authHandler = this.authHandler.bind(this);
     this.state = {
       uid: null,
       owner: null
@@ -22,6 +25,15 @@ class Inventory extends React.Component {
     [e.target.name]: e.target.value
     }
     this.props.updateFish(key, updatedFish);
+  }
+
+  authenticate(provider) {
+    console.log(`Trying to log in with ${provider}`);
+    base.authWithOAuthPopup(provider, this.authHandler)
+  }
+
+  authHandler(err, authData) {
+    console.log(authData)
   }
 
   renderLogin() {
@@ -53,13 +65,11 @@ class Inventory extends React.Component {
     )
   }
   render() {
-
     const logout = <button>Log Out</button>
     //Check if there is a user logged in w/ fb, gh, or twitter
     if(!this.state.uid) {
       return <div>{this.renderLogin()}</div>
     }
-
     //Check if user is the owner of the current store
     if(this.state.uid !== this.state.owner) {
       return (
@@ -73,6 +83,7 @@ class Inventory extends React.Component {
     return (
       <div>
       <h2>Inventory</h2>
+      {logout}
       {Object.keys(this.props.fishes).map(this.renderInventory)}
       <AddFishForm addFish={this.props.addFish} />
       <button onClick={this.props.loadSamples}>Load Sample Fishes</button>
