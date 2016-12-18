@@ -11,6 +11,7 @@ class Inventory extends React.Component {
     this.renderLogin = this.renderLogin.bind(this);
     this.authenticate = this.authenticate.bind(this);
     this.authHandler = this.authHandler.bind(this);
+    this.logout = this.logout.bind(this);
     this.state = {
       uid: null,
       owner: null
@@ -39,6 +40,11 @@ class Inventory extends React.Component {
   authenticate(provider) {
     console.log(`Trying to log in with ${provider}`);
     base.authWithOAuthPopup(provider, this.authHandler)
+  }
+
+  logout() {
+    base.unauth();
+    this.setState({ uid: null });
   }
 
   authHandler(err, authData) {
@@ -98,7 +104,7 @@ class Inventory extends React.Component {
     )
   }
   render() {
-    const logout = <button>Log Out</button>
+    const logout = <button onClick={this.logout}>Log Out</button>
     //Check if there is a user logged in w/ fb, gh, or twitter
     if(!this.state.uid) {
       return <div>{this.renderLogin()}</div>
