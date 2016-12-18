@@ -33,7 +33,14 @@ class Inventory extends React.Component {
   }
 
   authHandler(err, authData) {
-    console.log(authData)
+    console.log(authData);
+    if(err) {
+      console.error(err);
+      return
+    }
+
+    // Grabs the store info
+    const storeRef = base.database().ref()
   }
 
   renderLogin() {
@@ -97,7 +104,8 @@ Inventory.propTypes = {
   updateFish: React.PropTypes.func.isRequired,
   removeFish: React.PropTypes.func.isRequired,
   addFish: React.PropTypes.func.isRequired,
-  loadSamples: React.PropTypes.func.isRequired
+  loadSamples: React.PropTypes.func.isRequired,
+  storeId: React.PropTypes.string.isRequired
 };
 
 export default Inventory;
