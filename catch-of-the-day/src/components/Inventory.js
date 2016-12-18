@@ -17,6 +17,15 @@ class Inventory extends React.Component {
     }
   }
 
+  //Listens to see if user is logged in after app loads
+  componentDidMount() {
+    base.onAuth((user) => {
+      if(user) {
+        this.authHandler(null, { user });
+      }
+    });
+  }
+
   handleChange(e, key) {
     const fish = this.props.fishes[key];
     //take copy of fish then push to state
